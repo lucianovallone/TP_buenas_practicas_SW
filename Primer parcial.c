@@ -22,6 +22,51 @@ void liberarMemoria(Tanque *tanques);
 
 
 int main(int argc, char *argv[]) {
+	Tanque *tanques = NULL;
+	int cantidad = 0;
+	int opcion = 0;
+	
+	do {
+		printf("\n===========================================\n");
+		printf("  SISTEMA DE MONITOREO DE TANQUES DE AGUA  \n");
+		printf("===========================================\n");
+		printf("1. Ingresar nuevo tanque\n");
+		printf("2. Mostrar todos los tanques registrados\n");
+		printf("3. Mostrar los 2 tanques con menor nivel\n");
+		printf("4. Buscar tanques por sector (filtro de texto)\n");
+		printf("5. Salir\n");
+		printf("Seleccione una opcion: ");
+		
+		if (scanf("%d", &opcion) != 1) {
+			printf("Error: Ingrese un numero valido.\n");
+			limpiarBufferEntrada();
+			continue;
+		}
+		limpiarBufferEntrada();
+		
+		switch (opcion) {
+		case 1:
+			tanques = agregarTanque(tanques, &cantidad);
+			break;
+		case 2:
+			mostrarTanques(tanques, cantidad);
+			break;
+		case 3:
+			mostrarDosMinimos(tanques, cantidad);
+			break;
+		case 4:
+			buscarPorSector(tanques, cantidad);
+			break;
+		case 5:
+			printf("\nLiberando recursos y saliendo del sistema...\n");
+			liberarMemoria(tanques);
+			tanques = NULL;
+			break;
+		default:
+			printf("\nOpcion invalida. Intente nuevamente.\n");
+			break;
+		}
+	} while (opcion != 5);
 	
 	return 0;
 }
